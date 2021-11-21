@@ -1,0 +1,28 @@
+{
+    "name": "nazmulpcc/php-socks5",
+    "description": "Socks5 proxy server written in Swoole PHP",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Nazmul\\Socks\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Nazmul Alam",
+            "email": "nazmulpcc@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8",
+        "symfony/console": "^5.3"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "@dev"
+    }
+}

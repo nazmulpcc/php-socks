@@ -1,5 +1,5 @@
 {
-    "name": "nazmulpcc/php-socks5",
+    "name": "nazmulpcc/php-socks",
     "description": "Socks5 proxy server written in Swoole PHP",
     "type": "project",
     "license": "MIT",

@@ -42,6 +42,11 @@ class PeerCollection
         return $this->peers[$fd] ?? $this->add($fd);
     }
 
+    public function has(int $fd)
+    {
+        return isset($this->peers[$fd]);
+    }
+
     public function forget(int $fd)
     {
         $this->get($fd)->close();

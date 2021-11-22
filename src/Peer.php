@@ -64,6 +64,7 @@ class Peer
     public function close()
     {
         // TODO: handle more events
+        \Swoole\Event::del($this->remote);
         $this->open = false;
     }
 

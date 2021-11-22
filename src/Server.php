@@ -36,11 +36,16 @@ class Server
     {
         $this->server = new TcpServer($this->host, $this->port);
         $this->peers = new PeerCollection($this);
+
+        $this->server->set([
+            'enable_coroutine' => true
+        ]);
         
         // Event management
         $this->forwardTcpServerEvents();
         $this->server->on(Event::RECEIVE, [$this, 'handleRequest']);
-        $this->server->on(Event::CLOSE, function ($server, $fd, $reactor_id) {
+        $this->on(Event::CLOSE, function ($server, $fd, $reactor_id) {
+            echo "Forgeting {$fd}\n";
             $this->peers->forget($fd);
         });
     }
@@ -83,8 +88,12 @@ class Server
         $request = new CommandRequest($data);
         
         if($request->isConnectCommand()){
-            $peer->connect($request->host(), $request->port());
-            return $this->reply($peer, Reply::SUCCESS);
+            if($peer->connect($request->host(), $request->port())){
+                $this->fire(Event::REMOTE_CONNECTED, $peer, $request->host(), $request->port());
+                return $this->reply($peer, Reply::SUCCESS);
+            }else{
+                $this->fire(Event::REMOTE_FAILED, $peer, $request->host(), $request->port());
+            }
         }
 
         if($request->isBindCommand()){
@@ -140,6 +149,9 @@ class Server
      */
     public function send(Peer &$peer, $data)
     {
+        if(!$this->peers->has($peer->getFd())){
+            return;
+        }
         $this->server->send($peer->getFd(), $data);
         $this->fire(Event::SENT_DATA, $peer, strlen($data));
     }

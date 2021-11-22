@@ -18,6 +18,10 @@ try {
         echo "Client #". $peer->getFd() . " has authenticated\n";
     });
 
+    $server->on(Event::REMOTE_CONNECTED, function (Peer $peer, $host, $port) {
+        echo "Client #" . $peer->getFd() . " has connected with {$host}:{$port}\n";
+    });
+
     $server->on(Event::CLOSE, function ($server, $fd, $reactor) {
         echo "Connection closed with client #{$fd}.\n";
     });

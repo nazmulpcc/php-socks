@@ -14,6 +14,10 @@ interface Event
 
     const RECEIVE = 'receive'; // when data is received in a connection
 
+    const REMOTE_CONNECTED = 'remote_connected'; // when a remote connection is established for proxing to a peer
+    
+    const REMOTE_FAILED = 'remote_failed'; // when a remote connection fails
+    
     const AUTHENTICATED = 'authenticated'; // A peer has authenticated successfully
 
     const RECEIVED_PROXY_DATA = 'received_proxy_data'; // When data is received that needs to be proxied to a remote connection

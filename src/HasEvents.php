@@ -30,7 +30,7 @@ trait HasEvents
     public function fire(string $event, ...$data)
     {
         foreach ($this->registry[$event] ?? [] as $callback) {
-            call_user_func($callback, ...$data);
+            go($callback, ...$data);
         }
     }
 }
